@@ -1,8 +1,8 @@
-FROM alpine:3.4
+FROM alpine:3.6
 
 ENV ANSIBLE_HOST_KEY_CHECKING="False"
 ENV ANSIBLE_SSH_ARGS="-i /ansible-support/ssh_key"
-ENV ANSIBLE_VERSION="2.2.0.0"
+ENV ANSIBLE_VERSION="2.3.2.0"
 
 RUN env && mkdir /ansible{,-support} && apk update && \
   apk add tar openssh-client python py-pip py-yaml py-jinja2 py-httplib2 py-paramiko py-six rsync && \
