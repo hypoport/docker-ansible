@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.7
 
 ENV ANSIBLE_HOST_KEY_CHECKING="False"
 ENV ANSIBLE_SSH_ARGS="-i /ansible-support/ssh_key"
