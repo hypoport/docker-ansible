@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -f "${ANSIBLE_PRIVATE_KEY_FILE}" ]; then
-  eval $(gosu ansible ssh-agent)
+  eval $(gosu ansible ssh-agent >/dev/null)
   gosu ansible ssh-add "${ANSIBLE_PRIVATE_KEY_FILE}"
 fi
 
