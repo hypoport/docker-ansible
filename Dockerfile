@@ -1,7 +1,7 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 ENV ANSIBLE_HOST_KEY_CHECKING="False"
-ENV ANSIBLE_VERSION="2.7.8"
+ENV ANSIBLE_VERSION="2.8.0"
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
