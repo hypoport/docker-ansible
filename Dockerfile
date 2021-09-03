@@ -1,19 +1,19 @@
-FROM alpine:3.12
+FROM python:3.9-slim
 
 ENV ANSIBLE_HOST_KEY_CHECKING="False"
 ENV ANSIBLE_VERSION="2.9.24"
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-RUN env && mkdir /ansible && mkdir /ansible-support && \
-  apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing add gosu && \
-  apk --no-cache add tar rsync openssh-client python3 py3-pip py3-jinja2 py3-yaml py3-paramiko py3-cryptography py3-virtualenv && \
+RUN mkdir /ansible && mkdir /ansible-support && \
   pip3 --no-cache-dir install --upgrade pip && \
-  pip3 --no-cache-dir install --upgrade docker ansible==${ANSIBLE_VERSION} hvac jmespath boto3 && \
-  apk --no-cache add aws-cli && \
-  addgroup -S ansible && \
-  adduser -S ansible -G ansible && \
-  virtualenv --system-site-packages -p /usr/bin/python3 /home/ansible/venv && \
+  pip3 --no-cache-dir install --upgrade docker ansible==${ANSIBLE_VERSION} hvac jmespath boto3 awscli && \
+  apt update && apt -y install gosu tar rsync openssh-client curl && rm -rf /var/lib/apt/lists/* && \
+  curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb" && \
+  dpkg -i session-manager-plugin.deb && \
+  rm session-manager-plugin.deb && \
+  groupadd --system ansible && useradd --system -g ansible ansible && \
+  python3 -m venv --system-site-packages /home/ansible/venv && \
   chown -R ansible:ansible /home/ansible/venv && \
   mkdir /home/ansible/.ssh && \
   chown ansible:ansible /home/ansible/.ssh && \
