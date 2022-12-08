@@ -1,7 +1,7 @@
 FROM python:3.9-slim
 
 ENV ANSIBLE_HOST_KEY_CHECKING="False"
-ENV ANSIBLE_VERSION="4.5.0"
+ENV ANSIBLE_VERSION="7.0.0"
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
