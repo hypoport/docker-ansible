@@ -1,14 +1,14 @@
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 ENV ANSIBLE_HOST_KEY_CHECKING="False"
-ENV ANSIBLE_VERSION="7.0.0"
+ENV ANSIBLE_VERSION="9.3.0"
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 RUN mkdir /ansible && mkdir /ansible-support && \
   pip3 --no-cache-dir install --upgrade pip && \
   pip3 --no-cache-dir install --upgrade docker ansible==${ANSIBLE_VERSION} hvac jmespath boto3 awscli && \
-  apt update && apt -y install gosu tar rsync openssh-client curl && rm -rf /var/lib/apt/lists/* && \
+  apt update && apt -y install git gosu tar rsync openssh-client curl && rm -rf /var/lib/apt/lists/* && \
   curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb" && \
   dpkg -i session-manager-plugin.deb && \
   rm session-manager-plugin.deb && \
